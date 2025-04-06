@@ -1,12 +1,11 @@
 import { getPopular, getNowPlaying, getComingSoon } from '../utils/Api';
 import MovieList from './MovieList';
 import { useMovieList } from '../hooks/useMovieList';
-import { useLocation, useMatch, useParams } from 'react-router-dom';
+import { Outlet, useLocation, useMatch, useParams } from 'react-router-dom';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { bannerMovieAtom } from '../atoms/BannerAtoms';
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import MovieModal from './MovieModal';
-import { Outlet } from 'react-router-dom';
 import { AnimatePresence, LayoutGroup } from 'framer-motion';
 
 
@@ -50,12 +49,15 @@ function MoviePage() {
     if (isLoading) return <div>Loading...</div>;
     if (!data) return null;
 
+
     return (
         <>
-            <MovieList movies={data.results} />
-            <AnimatePresence>
-                {isModalOpen && <MovieModal />}
-            </AnimatePresence>
+            <LayoutGroup>
+                <MovieList movies={data.results} />
+                <AnimatePresence>
+                    {isModalOpen && <MovieModal />}
+                </AnimatePresence>
+            </LayoutGroup>
         </>
     );
 

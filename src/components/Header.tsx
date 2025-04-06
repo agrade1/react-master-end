@@ -1,5 +1,5 @@
 import { Link, useMatch } from "react-router-dom";
-import { Circle, Gnb, Logo, Menu, MenuList } from "../styles/Header";
+import { Circle, Gnb, Logo, Menu, MenuList } from "../styles/HeaderStyles";
 import { useEffect, useState } from "react";
 
 const menuItems = [

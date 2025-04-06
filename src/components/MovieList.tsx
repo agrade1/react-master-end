@@ -1,105 +1,57 @@
 import styled from "styled-components";
 import { Movie } from "../hooks/useMovieList";
 import { makeImagePath } from "../utils/Api";
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
-import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import { useLocation, useNavigate } from "react-router-dom";
+import { y } from "framer-motion/dist/types.d-B50aGbjN";
+import { MovieItem, MovieListWrap, MovieTitle } from "../styles/MovieStyles";
 
 interface Props {
     movies: Movie[];
 }
 
-const MovieListWrap = styled(motion.ul)`
-    position: relative;
-    top: -100px;
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 30px;
-    margin: 0 60px;
-
-    @media (max-width: 1200px) {
-        grid-template-columns: repeat(4, 1fr);
-    }
-
-    @media (max-width: 900px) {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 20px;
-    }
-
-    @media (max-width: 700px) {
-        grid-template-columns: repeat(2, 1fr);
-    }
-`;
-
-const MovieItem = styled(motion.li) <{ bg: string }>`
-    height: 300px;
-    background-image: url(${(props) => props.bg});
-    background-size: cover;
-    background-position: center;
-    border-radius: 10px;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    align-items: flex-end;
-    padding: 0 0 20px 20px;
-`;
-const MovieTitle = styled.span`
-    font-weight: bold;
-    font-size: 20px;
-`
 
 const listVariants = {
     hidden: {
         opacity: 0,
-        y: 50,
-      },
-      visible: {
+        y:-20,
+    },
+    visible: {
         opacity: 1,
-        y: 0,
+        y:0,
         transition: {
-          type: 'spring',
-          stiffness: 100,
-          damping: 15,
-          staggerChildren: 0.1, // 추가
+            duration: 0.5,
+            staggerChildren: 0.1,
         },
-      },
-      exit: {
-        opacity: 0,
-        y: 50,
-        transition: {
-          duration: 0.3,
-        },
-      },
+    },
 };
 
 const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0 },
+    hidden: { opacity: 0, y: 10 },
+    visible: { opacity: 1, y: 0, transition: { type: "spring", damping: 20, stiffness: 1000, duration: 0.5 }},
 };
 
-
 function MovieList({ movies }: Props) {
+    const navigate = useNavigate();
+    const location = useLocation();
+
     return (
         <MovieListWrap
             variants={listVariants}
             initial="hidden"
             animate="visible"
         >
-            {movies.map((movie, i) => (
-                <Link
-                    to={`${movie.id}`}
-              >
+            {movies.map((movie) => (
                 <MovieItem
                     key={movie.id}
                     variants={itemVariants}
                     bg={makeImagePath(movie.poster_path)}
                     whileHover={{ scale: 1.05, y: -20 }}
-                    layoutId={movie.id + ''}
+                    layoutId={`movie-${movie.id}`}
+                    onClick={() => navigate(`/${movie.id}`, { state: { background: location } })}
                 >
                     <MovieTitle>{movie.title}</MovieTitle>
                 </MovieItem>
-                 </Link>
             ))}
         </MovieListWrap>
     );
