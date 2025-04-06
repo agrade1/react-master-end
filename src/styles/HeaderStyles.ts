@@ -5,6 +5,7 @@ export const Gnb = styled(motion.header)<{ scrolled: boolean }>`
     position: fixed;
     left: 0;
     top: 0;
+    z-index: 1000;
     width: 100%;
     height: 80px;
     padding: 0 60px;
