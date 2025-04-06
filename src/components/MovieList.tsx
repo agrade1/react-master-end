@@ -1,9 +1,6 @@
-import styled from "styled-components";
 import { Movie } from "../hooks/useMovieList";
 import { makeImagePath } from "../utils/Api";
-import { motion } from "framer-motion";
 import { useLocation, useNavigate } from "react-router-dom";
-import { y } from "framer-motion/dist/types.d-B50aGbjN";
 import { MovieItem, MovieListWrap, MovieTitle } from "../styles/MovieStyles";
 
 interface Props {

@@ -1,10 +1,10 @@
 import { getPopular, getNowPlaying, getComingSoon } from '../utils/Api';
 import MovieList from './MovieList';
 import { useMovieList } from '../hooks/useMovieList';
-import { Outlet, useLocation, useMatch, useParams } from 'react-router-dom';
+import { useMatch, useParams } from 'react-router-dom';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { bannerMovieAtom } from '../atoms/BannerAtoms';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 import MovieModal from './MovieModal';
 import { AnimatePresence, LayoutGroup } from 'framer-motion';
 
